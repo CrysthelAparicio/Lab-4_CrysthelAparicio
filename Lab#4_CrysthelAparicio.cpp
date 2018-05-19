@@ -455,42 +455,59 @@ void listarDiaEspecifico(string day)
 }
 
 ///// E J E R C I C I O 2 ////
-
 void Ruffini(){
 
-        int grado_alto = 0;
+        int polinomioAlto = 0;
         int a = 0;
         int*** matriz = NULL;
-        int values = 0;
-        cout<<"Escriba del polinomio el nivel MAS ALTO!: "<<endl;
-        cin>>grado_alto;
-        int pa = pa+1;
-        cout<<"Escriba un valor para a: "<<endl;
+        int valores = 0;
+        cout<<"Escriba el polinomio alto: "<<endl;
+        cin>>polinomioAlto;
+        int polinomioAltoAvanzado = polinomioAlto+1;
+        cout<<"Escriba un valor de a: "<<endl;
         cin>>a;
-        matriz = crearMatriz(pa);
+        matriz = crearMatriz(polinomioAltoAvanzado);
+        int contador = 0;
 
-        for(int i = 0; i<pa; i++){
-                cout<<"Escriba un valor para nuestra casilla X'"<<i<<": "<<endl;
-                cin>>values;
-                matriz[0][0][i] = values;
-                values = 0;
+        for(int i = 0; i<polinomioAltoAvanzado; i++){
+                cout<<"Escriba un valor de la casilla x'"<<i<<": "<<endl;
+                cin>>valores;
+                matriz[0][0][i] = valores;
+                valores = 0;
         }
-        for(int i = 0; i < pa; i++){
-                for(int j = 0; j <pa; j++){
+
+
+        for(int i = 0; i < polinomioAltoAvanzado; i++){
+                for(int j = 0; j <polinomioAltoAvanzado; j++){
                         matriz[i][0][j] = matriz[0][0][j];
                         matriz[i][2][0] = matriz[0][0][0];
                 }
         }
-        for(int i = 0; i <pa; i++ ){
+
+        for(int i = 0; i <polinomioAltoAvanzado; i++ ){
                 for(int j=0; j<3; j++){
-                        for(int k = 0; k<pa; k++){
+                        for(int k = 0; k<polinomioAltoAvanzado; k++){
                                 matriz[i][1][k+1] = matriz[i][2][k]*a;
                                 matriz[i][2][k+1] = matriz[i][0][k+1]+matriz[i][1][k+1];
                         }
 
                 }
         }
-        imprimirMatriz(matriz, pa, a);
+
+        imprimirMatriz(matriz, polinomioAltoAvanzado, a);
+}
+
+void imprimirMatriz(int *** matriz, int polinomio, int a){
+        for(int i = 0; i <polinomio; i++ ){
+                for(int j = 0; j<3; j++){
+                                for(int k=0; k<polinomio; k++){
+                                        cout<<"[ "<<matriz[i][j][k]<<" ]";
+                                }
+                                cout<<"|"<<a<<endl;
+
+                }
+                cout<<endl;
+        }
 }
 
 int*** crearMatriz (int n){
@@ -498,24 +515,13 @@ int*** crearMatriz (int n){
         for(int i = 0; i <n; i++ ){
                 matriz[i] = new int*[3];
         }
+
         for(int i = 0; i < n; i++){
                 for(int j =0; j<3; j++){
                         matriz[i][j] = new int [n];
                 }
         }
 return matriz;
-}
-
-void imprimirMatriz(int *** matriz, int a, int poli){
-        for(int i = 0; i <poli; i++ ){
-                for(int j = 0; j<3; j++){
-                                for(int k=0; k<poli; k++){
-                                        cout<<"[ "<<matriz[i][j][k]<<" ]";
-                                }
-                                cout<<"|"<<a<<endl;
-                }
-                cout<<endl;
-        }
 }
 
 ///// E J E R C I C I O 3 ////
@@ -756,9 +762,3 @@ void descifrado_playfair(){
 	cout<<"El mensaje descifrado es:";
 	for(int i=0;i<strlen(m2);i++){
 		cout<<m2[i];
-		if(i%2!=0){
-			cout<<" ";
-		}
-	}
-	cout<<endl<<endl;
-}
