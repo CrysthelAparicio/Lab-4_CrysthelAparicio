@@ -29,9 +29,11 @@ void acomodar_mensaje (char,char);
 void llenar_matriz(char,char);
 int esta_matriz (char,char);
 
-//////////////////////7
-int*** crearMatrix(int);
-void ejercicio2();
+//////////////////////
+void imprimirMatriz(int***, int, int);
+void Ruffini();
+int*** crearMatriz(int);
+
 
 const int DOMINGO    = 0;
 const int LUNES      = 1;
@@ -78,7 +80,7 @@ int main()
                           fechas();
                                 break;
                         case 2:
-                            void eje2();
+                            Ruffini();
                                 break;
                         case 3:
                            do{	
@@ -117,17 +119,15 @@ int main()
 /// E J E R C I C I O 1 ///
 void fechas()
 {
-        // validas que no ingrese dias que no han pasado aun
-        // validar bisiestosa
-        // listar como oracion
+        
         int opcion = -1;
         do
         {
                 cout << "\nMENU FECHAS:\n"
                         << "1) Agregar fecha\n"
-                        << "2) Listar todo\n"
-                        << "3) Listar ordenado\n"
-                        << "4) Listar por consulta\n"
+                        << "2) Ver una Fecha\n"
+                        << "3) Ordenar una Fecha\n"
+                        << "4) Consultar una fecha\n"
                         << "0) Volver\n"
                         << "Seleccione una opcion: ";
                 cin >> opcion;
@@ -456,52 +456,66 @@ void listarDiaEspecifico(string day)
 
 ///// E J E R C I C I O 2 ////
 
-void ejercicio2(){
- int size=3;
- int*** matrix = NULL;
- matrix = crearMatrix(size);
+void Ruffini(){
 
- int grado_alto;
- int cont = 1;
- int cont2 = grado_alto;
- int num;
- int a;
+        int grado_alto = 0;
+        int a = 0;
+        int*** matriz = NULL;
+        int values = 0;
+        cout<<"Escriba del polinomio el nivel MAS ALTO!: "<<endl;
+        cin>>grado_alto;
+        int pa = pa+1;
+        cout<<"Escriba un valor para a: "<<endl;
+        cin>>a;
+        matriz = crearMatriz(pa);
 
- cout<<"Ingrese el grado mas alto del polinomio: ";
- cin>>grado_alto;
- int array[grado_alto];
+        for(int i = 0; i<pa; i++){
+                cout<<"Escriba un valor para nuestra casilla X'"<<i<<": "<<endl;
+                cin>>values;
+                matriz[0][0][i] = values;
+                values = 0;
+        }
+        for(int i = 0; i < pa; i++){
+                for(int j = 0; j <pa; j++){
+                        matriz[i][0][j] = matriz[0][0][j];
+                        matriz[i][2][0] = matriz[0][0][0];
+                }
+        }
+        for(int i = 0; i <pa; i++ ){
+                for(int j=0; j<3; j++){
+                        for(int k = 0; k<pa; k++){
+                                matriz[i][1][k+1] = matriz[i][2][k]*a;
+                                matriz[i][2][k+1] = matriz[i][0][k+1]+matriz[i][1][k+1];
+                        }
 
- while(cont<=grado_alto){
-   cout<<"Ingrese x´"<<cont2<<":"<<endl;
-   cin>>num;
-   array += num;
-   cont2--;
-
-   cont++;
- }
-
-  cout<<"Ingrese a";
-  cin>>a;
-  cout<<endl;
-
-  
-
- fillMatrix(matrix,size);
-
-
+                }
+        }
+        imprimirMatriz(matriz, pa, a);
 }
 
-int*** crearMatrix(int size){
-   int*** matrix = new int**[size];
-   for(int i = 0; i < size; i++){
-     matrix[i] = new int*[3];
-  }
-  for(int i = 0; i < size; i++){
-    for(int j = 0: j < 3; j++){
-     matrix[i][j] = new int [size];
-      }
-   }
- return matrix;
+int*** crearMatriz (int n){
+        int*** matriz = new int **[n];
+        for(int i = 0; i <n; i++ ){
+                matriz[i] = new int*[3];
+        }
+        for(int i = 0; i < n; i++){
+                for(int j =0; j<3; j++){
+                        matriz[i][j] = new int [n];
+                }
+        }
+return matriz;
+}
+
+void imprimirMatriz(int *** matriz, int a, int poli){
+        for(int i = 0; i <poli; i++ ){
+                for(int j = 0; j<3; j++){
+                                for(int k=0; k<poli; k++){
+                                        cout<<"[ "<<matriz[i][j][k]<<" ]";
+                                }
+                                cout<<"|"<<a<<endl;
+                }
+                cout<<endl;
+        }
 }
 
 ///// E J E R C I C I O 3 ////
